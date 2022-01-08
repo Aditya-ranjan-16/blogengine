@@ -6,7 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import CardMedia from "@mui/material/CardMedia";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
-import Viewer from "./Viewer";
+import Viewer from "./viewer/Viewer";
 
 const Post = ({
   title,

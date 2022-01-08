@@ -15,12 +15,12 @@ import FontFamily from "@tiptap/extension-font-family";
 import Color from "@tiptap/extension-color";
 import Highlight from "@tiptap/extension-highlight";
 import TextAlign from "@tiptap/extension-text-align";
-import IFrameExtension from "./IFrameExtension";
+import IFrameExtension from "../editor/IFrameExtension";
 import Code from "@tiptap/extension-code";
 
 // Custom styles for editor
-import "./Editor.css";
-import "./lowlight.css";
+import "../editor/Editor.css";
+import "../editor/lowlight.css";
 import { useEffect } from "react";
 
 const Viewer = ({ content }) => {
