@@ -5,7 +5,7 @@ const PostList = ({ posts }) => {
   return (
     <Grid container spacing={2}>
       {posts.map((post) => (
-        <Grid item xs={12} sm={6} md={4} lg={3} key={post.title}>
+        <Grid item xs={12} md={6} key={post.title}>
           <PostListItem {...post} />
         </Grid>
       ))}

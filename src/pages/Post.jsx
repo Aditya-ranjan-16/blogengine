@@ -1,0 +1,50 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import SinglePost from "../components/post/Post";
+
+const Post = () => {
+  const postID = useParams().pid;
+  const [postData, setPostData] = useState({ status: "loading" });
+  const [authorData, setAuthorData] = useState({ status: "loading" });
+
+  useEffect(async () => {
+    try {
+      const res = await axios.get(`/posts/${postID}`);
+      const post = res.data.post;
+      console.log(post);
+      setPostData({ status: "done", post });
+
+      const r2 = await axios.get(`/authors/${post.author}`);
+      const author = r2.data;
+      console.log(author);
+      setAuthorData({ status: "done", author });
+    } catch (error) {
+      console.log(error);
+      setPostData({ status: "error", message: error.message });
+    }
+  }, [postID]);
+
+  if (postData.status === "loading" || authorData.status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  if (postData.status === "error" || authorData.status === "error") {
+    return <div>Error</div>;
+  }
+
+  return (
+    <SinglePost
+      postID={postID}
+      title={postData.post.title}
+      subtitle={postData.post.subtitle}
+      content={JSON.parse(postData.post.content)}
+      author={authorData.author.name}
+      likes={postData.post.likes}
+      tags={postData.post.tags}
+      authorID={authorData.author._id}
+    />
+  );
+};
+
+export default Post;
