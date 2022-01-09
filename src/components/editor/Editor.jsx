@@ -1,4 +1,5 @@
 import { useEditor, EditorContent } from "@tiptap/react";
+import { useEffect } from "react";
 
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
@@ -23,7 +24,7 @@ import "./Editor.css";
 import "./lowlight.css";
 import EditorToolbar from "./EditorToolbar";
 
-const Editor = ({ initialContent, onChange }) => {
+const Editor = ({ initialContent, value, onChange }) => {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -61,6 +62,10 @@ const Editor = ({ initialContent, onChange }) => {
     content: initialContent || "",
     autofocus: true,
   });
+
+  useEffect(() => {
+    if (editor) editor.chain().clearContent().insertContent(value).run();
+  }, [editor, value]);
 
   return (
     <div>

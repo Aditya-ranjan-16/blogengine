@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-import Editor from "../components/editor/Editor";
-
 const Home = () => {
   const [authorList, setAuthorListData] = useState({
     status: "loading",
@@ -31,12 +29,12 @@ const Home = () => {
       <ul>
         {authorList.authors.map((author) => (
           <li key={author.id}>
-            <Link to={`/author/${author.id}`}>{author.name}</Link>
+            <Link to={`/author/${author.id}`}>{author.name}</Link>- {author.id}
           </li>
         ))}
       </ul>
 
-      <Editor />
+      <Link to="/post/new">Create new post</Link>
     </div>
   );
 };

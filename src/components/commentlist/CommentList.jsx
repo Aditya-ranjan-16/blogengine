@@ -23,12 +23,14 @@ const CommentList = ({ postID }) => {
       setCommentData({ status: "done", comments: res.data.comments });
     } catch (error) {
       setCommentData({
-        status: "error",
-        comments: {
-          name: "error",
-          email: "error@error.com",
-          comment: error.message,
-        },
+        status: "done",
+        comments: [
+          {
+            name: "error",
+            email: "if the error is 500 it means that there are no comments?",
+            comment: error.message,
+          },
+        ],
       });
       console.error(error);
     }

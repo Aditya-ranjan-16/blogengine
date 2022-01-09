@@ -13,6 +13,7 @@ import Home from "./pages/Home";
 import Post from "./pages/Post";
 import Error from "./pages/Error";
 import Author from "./pages/Author";
+import CreatePost from "./pages/CreatePost";
 
 // Just use the default theme
 const theme = createTheme({});
@@ -26,6 +27,7 @@ ReactDOM.render(
           <Route path="/" element={<App />}>
             <Route path="/" element={<Home />} />
             <Route path="post/:pid" element={<Post />} />
+            <Route path="post/new" element={<CreatePost />} />
             <Route path="author/:aid" element={<Author />} />
             <Route path="*" element={<Error />} />
           </Route>
