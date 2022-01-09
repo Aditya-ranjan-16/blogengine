@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Set up axios
 import axios from "axios";
-axios.defaults.baseURL = "http://krs-blogengine-api.herokuapp.com/api";
+axios.defaults.baseURL = "https://krs-blogengine-api.herokuapp.com/api";
 
 import App from "./App";
 import Home from "./pages/Home";
