@@ -1,12 +1,14 @@
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
+import {
+  Card,
+  CardContent,
+  Link,
+  ButtonGroup,
+  Button,
+  Box,
+  Divider,
+  Typography,
+} from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import Link from "@mui/material/Link";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import Typography from "@mui/material/Typography";
 import { Link as RouterLink } from "react-router-dom";
 
 import Viewer from "../viewer/Viewer";

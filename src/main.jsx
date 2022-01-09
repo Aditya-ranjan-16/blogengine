@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import CssBaseline from "@mui/material/CssBaseline";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { CssBaseline } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import axios from "axios";
 
 // Set up axios
-import axios from "axios";
 axios.defaults.baseURL = "https://krs-blogengine-api.herokuapp.com/api";
 
 import App from "./App";

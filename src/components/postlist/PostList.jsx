@@ -1,4 +1,4 @@
-import Grid from "@mui/material/Grid";
+import { Grid } from "@mui/material";
 import PostListItem from "./PostListItem";
 
 const PostList = ({ posts }) => {

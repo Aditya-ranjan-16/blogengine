@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
-import { Link } from "react-router-dom";
+import Editor from "../components/editor/Editor";
 
 const Home = () => {
   const [authorList, setAuthorListData] = useState({
@@ -34,6 +35,8 @@ const Home = () => {
           </li>
         ))}
       </ul>
+
+      <Editor />
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 
 import StarterKit from "@tiptap/starter-kit";
@@ -21,7 +22,6 @@ import Code from "@tiptap/extension-code";
 // Custom styles for editor
 import "../editor/Editor.css";
 import "../editor/lowlight.css";
-import { useEffect } from "react";
 
 const Viewer = ({ content }) => {
   const editor = useEditor({
@@ -59,6 +59,7 @@ const Viewer = ({ content }) => {
     editable: false,
   });
 
+  // Refreshes viewer post if content changes
   useEffect(() => {
     if (editor) editor.chain().clearContent().insertContent(content).run();
   }, [editor, content]);

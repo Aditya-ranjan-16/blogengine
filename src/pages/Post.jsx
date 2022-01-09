@@ -1,6 +1,7 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
+
 import SinglePost from "../components/post/Post";
 
 const Post = () => {
@@ -10,13 +11,13 @@ const Post = () => {
 
   useEffect(async () => {
     try {
-      const res = await axios.get(`/posts/${postID}`);
-      const post = res.data.post;
+      const postRes = await axios.get(`/posts/${postID}`);
+      const post = postRes.data.post;
       console.log(post);
       setPostData({ status: "done", post });
 
-      const r2 = await axios.get(`/authors/${post.author}`);
-      const author = r2.data;
+      const authorRes = await axios.get(`/authors/${post.author}`);
+      const author = authorRes.data;
       console.log(author);
       setAuthorData({ status: "done", author });
     } catch (error) {

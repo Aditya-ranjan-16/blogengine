@@ -1,8 +1,10 @@
-import Toolbar from "@mui/material/Toolbar";
-import AppBar from "@mui/material/AppBar";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import IconButton from "@mui/material/IconButton";
+import {
+  Toolbar,
+  AppBar,
+  Typography,
+  Container,
+  IconButton,
+} from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 
 import { Link, Outlet } from "react-router-dom";
