@@ -10,21 +10,21 @@ import {
   CardHeader,
   CardContent,
   Chip,
-  Stack
+  Stack,
 } from "@mui/material";
-import { useState, useEffect,useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import Editor from "./Editor";
-import useMediaQuery from '@mui/material/useMediaQuery'
+import useMediaQuery from "@mui/material/useMediaQuery";
 import axios from "axios";
 import "./Createpost.css";
 const CreatePost = () => {
-  const matches = useMediaQuery('(max-width:600px)');
+  const matches = useMediaQuery("(max-width:600px)");
   const [authorID, setAuthorID] = useState("");
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
   const [tags, setTags] = useState([]);
   const [postContent, setPostContent] = useState("");
-  const tagfield=useRef("");
+  const tagfield = useRef("");
 
   const [authorList, setAuthorListData] = useState({
     status: "loading",
@@ -36,13 +36,16 @@ const CreatePost = () => {
       console.log(res.data);
       setAuthorListData({ status: "done", authors: res.data.authors });
     } catch (error) {
-
       console.error(error);
     }
   }, []);
 
   if (authorList.status === "loading" || authorList.status === "error") {
-    return <center><CircularProgress /></center>;
+    return (
+      <center>
+        <CircularProgress />
+      </center>
+    );
   }
 
   const handleSubmit = async (e) => {
@@ -73,20 +76,18 @@ const CreatePost = () => {
     window.location.assign(newURL);
   };
 
-const TagHandelar=()=>{
-  if(tagfield.current.value!=""){
-    let has="#".concat(tagfield.current.value)
-    setTags([...tags,has])
-    tagfield.current.value=""
-  }
-   
-};
+  const TagHandelar = () => {
+    if (tagfield.current.value != "") {
+      let has = "#".concat(tagfield.current.value);
+      setTags([...tags, has]);
+      tagfield.current.value = "";
+    }
+  };
 
-const handleDelete=(e)=>{
-    console.log(e)
-    setTags(tags.filter(item => item !== e))
-   
-};
+  const handleDelete = (e) => {
+    console.log(e);
+    setTags(tags.filter((item) => item !== e));
+  };
   return (
     <Box
       sx={{
@@ -94,13 +95,11 @@ const handleDelete=(e)=>{
         flexDirection: "column",
         gap: 2,
         alignItems: "stretch",
-        border:"2px solid lightgreen",
-        borderRadius:"20px",
-        padding:2
+        border: "2px solid lightgreen",
+        borderRadius: "20px",
+        padding: 2,
       }}
     >
-
-
       <form onSubmit={handleSubmit}>
         <Box
           sx={{
@@ -134,70 +133,72 @@ const handleDelete=(e)=>{
               Publish
             </Button>
           </Box>
-          <InputLabel sx={{ color: "black" }} id="demo-simple-select-label"><strong>Select Author</strong></InputLabel>
+          <InputLabel sx={{ color: "black" }} id="demo-simple-select-label">
+            <strong>Select Author</strong>
+          </InputLabel>
           <Box
             sx={{
               display: "flex",
-              flexDirection: matches?"column":"row",
+              flexDirection: matches ? "column" : "row",
               gap: 2,
               alignItems: "center",
             }}
           >
-
             <Select
               value={authorID}
-              sx={{ width: matches?"100%":"50%" }}
+              sx={{ width: matches ? "100%" : "50%" }}
               lable="Author"
-
               onChange={(e) => setAuthorID(e.target.value)}
             >
               {authorList.authors.map((x) => (
                 <MenuItem value={x.id}>{x.name}</MenuItem>
               ))}
-
-
             </Select>
-            <Card elevation={0} sx={{ width:matches? "100%":"50%" , border:"1px solid grey" }}>
-              <CardHeader title={
-                 <Box
-                 sx={{
-                   display: "flex",
-                   flexDirection: matches?"column":"row",
-                   gap: 2,
-                  
-                 }}
-               >
-                <TextField
-                  sx={{ width: matches?"100%":"70%"}}
-                  label="Add Tags "
-                  variant="outlined"
-                
-                  inputRef={tagfield}
-                />
-                <Button
-              variant="outlined"
-              color="success"
-              component="button"
-              onClick={TagHandelar}
+            <Card
+              elevation={0}
+              sx={{ width: matches ? "100%" : "50%", border: "1px solid grey" }}
             >
-              Add
-            </Button>
-                </Box>
-
-              }>
-                </CardHeader>
-              <CardContent  className="tagCont">
-              <Stack sx={{overflowX:"scroll"}} direction="row" spacing={2}>
-                {tags.length!=0 && tags.map((e)=>(
-               <Chip sx={{color:"blue",borderColor:"blue"}} label={e} variant="outlined" onDelete={()=>handleDelete(e)}  />
-                ))}
+              <CardHeader
+                title={
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: matches ? "column" : "row",
+                      gap: 2,
+                    }}
+                  >
+                    <TextField
+                      sx={{ width: matches ? "100%" : "70%" }}
+                      label="Add Tags "
+                      variant="outlined"
+                      inputRef={tagfield}
+                    />
+                    <Button
+                      variant="outlined"
+                      color="success"
+                      component="button"
+                      onClick={TagHandelar}
+                    >
+                      Add
+                    </Button>
+                  </Box>
+                }
+              ></CardHeader>
+              <CardContent className="tagCont">
+                <Stack sx={{ overflowX: "scroll" }} direction="row" spacing={2}>
+                  {tags.length != 0 &&
+                    tags.map((e) => (
+                      <Chip
+                        sx={{ color: "blue", borderColor: "blue" }}
+                        label={e}
+                        variant="outlined"
+                        onDelete={() => handleDelete(e)}
+                      />
+                    ))}
                 </Stack>
               </CardContent>
-              
             </Card>
-
           </Box>
-
 
           <TextField
             label="Subtitle"

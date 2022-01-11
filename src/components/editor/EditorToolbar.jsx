@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { Box, Card, IconButton, Divider, Tooltip } from "@mui/material";
+import FormatColorResetIcon from "@mui/icons-material/FormatColorReset";
 
 import getActions from "./actions";
 
@@ -16,8 +17,8 @@ const EditorToolbar = ({ editor }) => {
     ACTIONS.toggleSuperscript,
     ACTIONS.toggleSubscript,
     ACTIONS.toggleHighlight,
-    ACTIONS.setColor,
-    ACTIONS.unsetColor,
+    // ACTIONS.setColor,
+    // ACTIONS.unsetColor,
     ACTIONS.toggleInlineCode,
     ACTIONS.insertLink,
 
@@ -48,6 +49,9 @@ const EditorToolbar = ({ editor }) => {
     ACTIONS.insertHorizontalRule,
     ACTIONS.insertImage,
     ACTIONS.insertEmbed,
+    ACTIONS.insertYoutube,
+
+    ACTIONS.sep,
   ];
 
   const actionCallback = (item, index) => {
@@ -94,6 +98,28 @@ const EditorToolbar = ({ editor }) => {
       }}
     >
       {actions.map(actionCallback)}
+
+      <Tooltip title="clear color" arrow placement="bottom">
+        <Box>
+          <IconButton
+            aria-label="clear color"
+            onClick={() => editor.chain().focus().unsetColor().run()}
+          >
+            <FormatColorResetIcon />
+          </IconButton>
+        </Box>
+      </Tooltip>
+
+      <div className="editor-input-color-wrapper">
+        <input
+          type="color"
+          className="editor-input-color"
+          onInput={(event) =>
+            editor.chain().focus().setColor(event.target.value).run()
+          }
+          value={editor.getAttributes("textStyle").color}
+        />
+      </div>
     </Card>
   );
 };

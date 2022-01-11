@@ -25,6 +25,7 @@ import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
 import FormatColorTextIcon from "@mui/icons-material/FormatColorText";
 import FormatColorResetIcon from "@mui/icons-material/FormatColorReset";
 import DataObjectIcon from "@mui/icons-material/DataObject";
+import YouTubeIcon from "@mui/icons-material/YouTube";
 
 const getActions = (editor) => {
   return {
@@ -293,6 +294,30 @@ const getActions = (editor) => {
             .chain()
             .focus()
             .setIframe({ src: url })
+            .createParagraphNear()
+            .run();
+        }
+      },
+      valid: () => editor.can().setIframe(),
+    },
+
+    insertYoutube: {
+      label: "insert youtube video from link",
+      icon: YouTubeIcon,
+      action: () => {
+        const url = window.prompt("Youtube URL");
+        const extract = (url) => {
+          const regExp =
+            /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+          const match = url.match(regExp);
+          return match && match[7].length == 11 ? match[7] : false;
+        };
+        if (url && extract(url)) {
+          const id = extract(url);
+          editor
+            .chain()
+            .focus()
+            .setIframe({ src: `https://www.youtube.com/embed/${id}` })
             .createParagraphNear()
             .run();
         }
