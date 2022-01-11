@@ -1,17 +1,15 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
+import { CircularProgress } from "@mui/material";
+import PostList from "./PostList";
 
-import PostList from "../components/postlist/PostList";
-
-const Author = () => {
-  const aid = useParams().aid;
-
+const PostGrid = ({authorId}) => {
+  const aid = authorId;
   const [authorPosts, setAuthorPosts] = useState({
     status: "loading",
     posts: [],
   });
-
+ console.log(authorId);
   useEffect(async () => {
     try {
       const res = await axios.get(`/posts/author/${aid}`);
@@ -21,10 +19,12 @@ const Author = () => {
       setAuthorPosts({ status: "error", error: error.message });
       console.error(error);
     }
+    return ()=>{  setAuthorPosts({
+    })   }
   }, [aid]);
 
   if (authorPosts.status === "loading") {
-    return <div>loading..</div>;
+    return  <center><CircularProgress/></center>;
   }
 
   if (authorPosts.status === "error") {
@@ -38,4 +38,4 @@ const Author = () => {
   );
 };
 
-export default Author;
+export default PostGrid;

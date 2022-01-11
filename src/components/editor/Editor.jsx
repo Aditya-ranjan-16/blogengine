@@ -68,7 +68,7 @@ const Editor = ({ initialContent, value, onChange }) => {
   }, [editor, value]);
 
   return (
-    <div>
+    <div className="editor-div">
       {editor && <EditorToolbar editor={editor} />}
       <EditorContent editor={editor} className="editor-wrapper" />
     </div>

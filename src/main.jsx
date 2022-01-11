@@ -3,17 +3,13 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CssBaseline } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import axios from "axios";
-
-// Set up axios
-axios.defaults.baseURL = "https://krs-blogengine-api.herokuapp.com/api";
 
 import App from "./App";
 import Home from "./pages/Home";
-import Post from "./pages/Post";
+import Post from "./components/post/PostViewer";
 import Error from "./pages/Error";
-import Author from "./pages/Author";
-import CreatePost from "./pages/CreatePost";
+import Author from "./components/PostGrid/PostGrid";
+import CreatePost from "./components/editor/CreatePost";
 
 // Just use the default theme
 const theme = createTheme({});

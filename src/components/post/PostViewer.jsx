@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-import SinglePost from "../components/post/Post";
-
-const Post = () => {
+import SinglePost from "./Post";
+import { CircularProgress } from "@mui/material";
+const PostViewer = () => {
   const postID = useParams().pid;
   const [postData, setPostData] = useState({ status: "loading" });
   const [authorData, setAuthorData] = useState({ status: "loading" });
@@ -27,11 +27,11 @@ const Post = () => {
   }, [postID]);
 
   if (postData.status === "loading" || authorData.status === "loading") {
-    return <div>Loading...</div>;
+    return <center><CircularProgress/></center>;
   }
 
   if (postData.status === "error" || authorData.status === "error") {
-    return <div>Error</div>;
+    return <center><CircularProgress/></center>;
   }
 
   return (
@@ -48,4 +48,4 @@ const Post = () => {
   );
 };
 
-export default Post;
+export default PostViewer;

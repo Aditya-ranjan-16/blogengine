@@ -2,16 +2,17 @@ import {
   Card,
   CardContent,
   Link,
-  ButtonGroup,
   Button,
   Box,
   Divider,
   Typography,
+  Chip,
+  Stack
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Link as RouterLink } from "react-router-dom";
 
-import Viewer from "../viewer/Viewer";
+import Viewer from "./Viewer";
 import CommentList from "../commentlist/CommentList";
 
 const Post = ({
@@ -61,11 +62,11 @@ const Post = ({
           <Viewer content={content} />
         </Box>
         <Divider sx={{ width: "100%" }} />
-        <ButtonGroup>
-          {tags.map((tag) => (
-            <Button key={tag}>{tag}</Button>
-          ))}
-        </ButtonGroup>
+        <Stack  direction="row" spacing={2}>
+                {tags.length!=0 && tags.map((e)=>(
+               <Chip sx={{color:"blue",borderColor:"blue"}} label={e} variant="outlined" onClick  />
+                ))}
+        </Stack>
         <Link
           to={`/author/${authorID}`}
           component={RouterLink}
