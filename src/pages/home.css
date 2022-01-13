@@ -35,10 +35,7 @@
     background:green;
     border-radius: 20px;
   }
-  @fontface {
-    font-family: 'Bungee Inline', cursive;
-    src: url('https://fonts.googleapis.com/css?family=Bungee+Inline')
-  }
+
 
   .dthr {
     border: none;
