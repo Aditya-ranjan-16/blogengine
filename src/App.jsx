@@ -11,7 +11,6 @@ import {
 import { Link, Outlet } from "react-router-dom";
 import icon from "./images/coding.png"
 import blog from "./images/blog.png"
-import demo from "./images/demo.png"
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 const App = () => {
