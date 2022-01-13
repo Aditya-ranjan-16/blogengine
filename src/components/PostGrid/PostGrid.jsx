@@ -9,18 +9,17 @@ const PostGrid = ({authorId}) => {
     status: "loading",
     posts: [],
   });
- console.log(authorId);
-  useEffect(async () => {
+  useEffect(() => {
+    async function makeRequest(){
     try {
       const res = await axios.get(`/posts/author/${aid}`);
-      console.log(res.data);
       setAuthorPosts({ status: "done", posts: res.data.posts });
     } catch (error) {
       setAuthorPosts({ status: "error", error: error.message });
       console.error(error);
     }
-    return ()=>{  setAuthorPosts({
-    })   }
+  };
+  makeRequest();
   }, [aid]);
 
   if (authorPosts.status === "loading") {

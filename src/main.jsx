@@ -11,8 +11,9 @@ import Error from "./pages/Error";
 import Author from "./components/PostGrid/PostGrid";
 import CreatePost from "./components/editor/CreatePost";
 
-// Just use the default theme
-const theme = createTheme({});
+const theme = createTheme({
+  
+});
 
 ReactDOM.render(
   <React.StrictMode>

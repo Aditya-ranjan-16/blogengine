@@ -1,0 +1,48 @@
+.floating { 
+    animation-name: floating;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease;
+    margin-left: 30px;
+    margin-top: 5px;
+   
+}
+.shadowlight{
+    animation-name: glowing;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+@keyframes floating {
+    0% { transform: translate(0,  0px); }
+    50%  { transform: translate(0, 15px); }
+    100%   { transform: translate(0, -0px); }   
+}
+@keyframes glowing {
+    0% {box-shadow: 0px 1px 5px lightgreen; }
+    50%  { box-shadow: 0px 1px 20px lightgreen; }
+    100%   { box-shadow: 0px 1px 5px lightgreen; }   
+}
+::-webkit-scrollbar{
+    width:5px;
+    height:3px;
+  }
+  
+::-webkit-scrollbar-track{
+    background:#2a2e35;
+  } 
+ ::-webkit-scrollbar-thumb{
+    background:green;
+    border-radius: 20px;
+  }
+  @fontface {
+    font-family: 'Bungee Inline', cursive;
+    src: url('https://fonts.googleapis.com/css?family=Bungee+Inline')
+  }
+
+  .dthr {
+    border: none;
+    height: 2px;
+    background: #2a2e35;
+    background: repeating-linear-gradient(90deg,#2a2e35,#2a2e35 6px,transparent 6px,transparent 12px);
+  }

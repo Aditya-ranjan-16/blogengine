@@ -2,78 +2,113 @@ import {
   Box,
   Button,
   TextField,
-  CircularProgress,
-  InputLabel,
-  Select,
-  MenuItem,
+  Avatar,
   Card,
   CardHeader,
   CardContent,
   Chip,
   Stack,
 } from "@mui/material";
-import { useState, useEffect, useRef } from "react";
+import { useState,useRef,useEffect } from "react";
 import Editor from "./Editor";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import EditIcon from '@mui/icons-material/Edit';
 import axios from "axios";
+
+
 import "./Createpost.css";
-const CreatePost = () => {
+const CreatePost = ({authorID}) => {
+  
   const matches = useMediaQuery("(max-width:600px)");
-  const [authorID, setAuthorID] = useState("");
   const [title, setTitle] = useState("");
+  const [authorName, setAuthorName] = useState("");
+  const [thumbnil, setThumbnil] = useState("https://www.garyvaynerchuk.com/wp-content/uploads/150624-The_Current_state_of_blogging_1200x628-01.png");
   const [subtitle, setSubtitle] = useState("");
   const [tags, setTags] = useState([]);
   const [postContent, setPostContent] = useState("");
+  const [error, setError] = useState({title:false,subtitle:false,tag:false});
   const tagfield = useRef("");
+  const thumbnilfield = useRef("");
 
-  const [authorList, setAuthorListData] = useState({
-    status: "loading",
-    authors: [],
-  });
-  useEffect(async () => {
+  useEffect( () => {
+    async function makeRequest(){
     try {
-      const res = await axios.get("/authors/");
-      console.log(res.data);
-      setAuthorListData({ status: "done", authors: res.data.authors });
+      const authRes = await axios.get(`/authors/${authorID}`);
+      const auth = authRes.data.name;
+      setAuthorName(auth)
     } catch (error) {
       console.error(error);
     }
+}
+makeRequest()
   }, []);
-
-  if (authorList.status === "loading" || authorList.status === "error") {
-    return (
-      <center>
-        <CircularProgress />
-      </center>
-    );
+  const handleChange=(l,v)=>{
+   
+    switch(l){
+      case "Title":
+        
+          if(v==""){
+            
+            let o=error;
+            o.title=true;
+             setError(o)
+          }else{
+            let o=error;
+            o.title=false;
+             setError(o)
+          }
+          break;
+      case "Subtitle":
+        if(v==""){
+          let o=error;
+          o.subtitle=true;
+           setError(o)
+      }else{
+        let o=error;
+        o.subtitle=false;
+         setError(o)
+      }
+          break;
+    }
   }
-
   const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if(error.title==true || title==""){
+     alert("title field is Empty")
+     return
+   }
+   if(error.subtitle==true || subtitle==""){
+    alert("subtitle field is Empty")
+    return
+  }
+  if(postContent.length==0){
+    alert("Blog content Empty")
+    return
+  }
     const postObject = {
       title,
       subtitle,
       content: postContent,
       auth: authorID,
       tags: tags,
+      thumb:thumbnil
     };
-    console.log(postObject);
-    setAuthorID("");
+   
     setTitle("");
     setSubtitle("");
-    setTags([" "]);
+    setThumbnil("https://www.garyvaynerchuk.com/wp-content/uploads/150624-The_Current_state_of_blogging_1200x628-01.png")
+    setTags("");
     setPostContent("");
+   
 
-    e.preventDefault();
-    let newURL = "/";
+
     try {
       const res = await axios.post("/posts/", postObject);
-      console.log(res);
-      newURL = `/post/${res.data.post._id}`;
+      alert("Post Published Succesfully")
     } catch (error) {
-      console.error(error);
+      alert(error)
     }
-
-    window.location.assign(newURL);
   };
 
   const TagHandelar = () => {
@@ -83,24 +118,40 @@ const CreatePost = () => {
       tagfield.current.value = "";
     }
   };
+  const ThumbnilHandelar = () => {
+    if (thumbnilfield.current.value != "") {
+    setThumbnil(thumbnilfield.current.value)
+    console.log(thumbnilfield.current.value)
+    }
+  };
 
   const handleDelete = (e) => {
-    console.log(e);
     setTags(tags.filter((item) => item !== e));
   };
+   const current = new Date();
+ const monthname = [{ n: 0, name: "January" }, { n: 1, name: "Feburary" }, { n: 2, name: "March" }, { n: 3, name: "April" }, { n: 4, name: "May" }, { n: 5, name: "June" }, { n: 6, name: "July" }, { n: 7, name: "August" }, { n: 8, name: "September" }, { n: 9, name: "October" }, { n: 10, name: "November" }, { n: 11, name: "December" }].find((v) => {
+    if (current.getMonth() == v.n) {
+      return v
+    }
+
+  })
+
+  const date = `${current.getDate()} ${monthname.name} ${current.getFullYear()}`;
   return (
     <Box
       sx={{
         display: "flex",
         flexDirection: "column",
         gap: 2,
-        alignItems: "stretch",
+       
         border: "2px solid lightgreen",
         borderRadius: "20px",
         padding: 2,
+        backgroundColor:"white"
       }}
     >
-      <form onSubmit={handleSubmit}>
+     <span style={{color:"green",borderBottom:"1px solid lightgreen"}}><EditIcon sx={{fontSize:"1em",marginRight:1}}/>{authorName} - <span style={{color:"grey",align:"right"}}>{date}</span></span>
+        
         <Box
           sx={{
             display: "flex",
@@ -119,23 +170,21 @@ const CreatePost = () => {
           >
             <TextField
               label="Title"
+              name="lol"
               variant="outlined"
               sx={{ width: "90%" }}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => {setTitle(e.target.value);handleChange(e.target.labels[0].outerText,e.target.value)}}
+              onBlur={(e) => {handleChange(e.target.labels[0].outerText,e.target.value)}}
+              error={error.title}
+              helperText={error.title?"Title field Empty":""}
               value={title}
+
+           
             />
-            <Button
-              variant="contained"
-              color="success"
-              component="button"
-              type="submit"
-            >
-              Publish
-            </Button>
+  
+     
           </Box>
-          <InputLabel sx={{ color: "black" }} id="demo-simple-select-label">
-            <strong>Select Author</strong>
-          </InputLabel>
+        
           <Box
             sx={{
               display: "flex",
@@ -144,19 +193,44 @@ const CreatePost = () => {
               alignItems: "center",
             }}
           >
-            <Select
-              value={authorID}
-              sx={{ width: matches ? "100%" : "50%" }}
-              lable="Author"
-              onChange={(e) => setAuthorID(e.target.value)}
+           <Card
+              elevation={0}
+              sx={{ width: matches ? "100%" : "50%", border: "1px solid lightgreen" }}
             >
-              {authorList.authors.map((x) => (
-                <MenuItem value={x.id}>{x.name}</MenuItem>
-              ))}
-            </Select>
+               <CardHeader
+                title={
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: matches ? "column" : "row",
+                      gap: 2,
+                      alignItems: "center",
+                    }}
+                  >
+                    <Avatar key={thumbnil} sx={{width:matches?"30%":"15%",marginTop:1}} variant="rounded" src={thumbnil}>
+
+                    </Avatar>
+                    <TextField
+                      sx={{ width: matches ? "100%" : "70%" }}
+                      label="Change Thumbnail Link"
+                      variant="outlined"
+                      inputRef={thumbnilfield}
+                    />
+                    <Button
+                      variant="outlined"
+                      color="success"
+                      
+                      onClick={ThumbnilHandelar}
+                    >
+                      Change
+                    </Button>
+                  </Box>
+                }
+              ></CardHeader>
+            </Card>
             <Card
               elevation={0}
-              sx={{ width: matches ? "100%" : "50%", border: "1px solid grey" }}
+              sx={{ width: matches ? "100%" : "50%", border: "1px solid lightgreen" }}
             >
               <CardHeader
                 title={
@@ -172,12 +246,26 @@ const CreatePost = () => {
                       label="Add Tags "
                       variant="outlined"
                       inputRef={tagfield}
+                      inputProps={{
+                        maxLength: 30,
+                      }}
+                      onKeyPress={(e) => {
+                        if (e.key === 'Enter') {
+                          TagHandelar();
+                        }
+                      }}
+                      InputProps={{
+                        startAdornment: (
+                          <span style={{color:"grey",marginRight:2,paddingRight:2}}>#</span>
+                        ),
+                      }}
                     />
                     <Button
                       variant="outlined"
                       color="success"
                       component="button"
                       onClick={TagHandelar}
+
                     >
                       Add
                     </Button>
@@ -205,13 +293,26 @@ const CreatePost = () => {
             variant="standard"
             multiline
             rows={2}
-            onChange={(e) => setSubtitle(e.target.value)}
+            onChange={(e) => {setSubtitle(e.target.value);handleChange("Subtitle",e.target.value)}}
+            onBlur={(e) => {handleChange("Subtitle",e.target.value)}}
+            error={error.subtitle}
+            helperText={error.subtitle?"SubTitle field Empty":""}
             value={subtitle}
           />
         </Box>
-      </form>
+    
 
       <Editor onChange={setPostContent} value={postContent} />
+      <Button
+              variant="contained"
+              color="success"
+              component="button"
+              onClick={handleSubmit}
+             sx={{width:"22%",}}
+             
+            >
+              Publish
+            </Button>
     </Box>
   );
 };

@@ -1,6 +1,5 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import { useEffect } from "react";
-
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import TaskList from "@tiptap/extension-task-list";
@@ -60,11 +59,11 @@ const Editor = ({ initialContent, value, onChange }) => {
       if (onChange) onChange(editor.getJSON());
     },
     content: initialContent || "",
-    autofocus: true,
+    autofocus: false,
   });
 
   useEffect(() => {
-    if (editor) editor.chain().clearContent().insertContent(value).run();
+    if (editor) editor.chain().clearContent().insertContent(value).blur().run();
   }, [editor, value]);
 
   return (

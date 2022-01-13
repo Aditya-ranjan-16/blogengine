@@ -2,10 +2,16 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import Comment from "./Comment";
-
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Box from "@mui/material/Box";
+import { Button, Divider, TextField } from "@mui/material";
+
 
 const CommentList = ({ postID }) => {
+  const matches = useMediaQuery("(max-width:600px)");
+  const [name,setName]=useState("")
+  const [email,setEmail]=useState("")
+  const [comment,setComment]=useState("")
   const [commentData, setCommentData] = useState({
     status: "loading",
     comments: [
@@ -22,21 +28,50 @@ const CommentList = ({ postID }) => {
       const res = await axios.get(`/comments/post/${postID}`);
       setCommentData({ status: "done", comments: res.data.comments });
     } catch (error) {
-      setCommentData({
-        status: "done",
-        comments: [
-          {
-            name: "error",
-            email: "if the error is 500 it means that there are no comments?",
-            comment: error.message,
-          },
-        ],
-      });
       console.error(error);
     }
   }, [postID]);
 
+  const postComment=async()=>{
+    let msg="";
+    if(name.length==0){
+       msg+="Name"
+       alert("Empty Fields - "+msg)
+       return
+    }
+    if(email.length==0){
+      msg+="Email"
+      alert("Empty Fields - "+msg)
+      return
+   }
+   if(comment.length==0){
+    msg+="Comment"
+    alert("Empty Fields - "+msg)
+    return
+ }
+    const commentObject = {
+      name:name,
+      email:email,
+      comment: comment,
+      post: postID,
+   
+    };
+    setName("")
+    setEmail("")
+    setComment("")
+    try {
+      const res = await axios.post("/comments/", commentObject);
+      console.log(res);
+      
+      setCommentData(prev=>({ status: "done", comments: [...prev.comments,commentObject] }));
+    } catch (error) {
+      alert(error)
+    }
+
+  }
+
   return (
+    
     <Box
       sx={{
         display: "flex",
@@ -46,7 +81,43 @@ const CommentList = ({ postID }) => {
         gap: 2,
       }}
     >
-      {commentData.comments.map((comment) => (
+        <Box
+      sx={{
+        display: "flex",
+        alignItems: "stretch",
+        width: "100%",
+        flexDirection: "row",
+        gap: 2,
+      }}
+    >
+     <TextField
+      label="Name"
+      sx={{width:"50%"}}
+      value={name}
+     
+      onChange={(e)=>{setName(e.target.value)}}
+      />
+         <TextField
+      label="Email"
+      sx={{width:"50%"}}
+      value={email}
+      onChange={(e)=>{setEmail(e.target.value)}}
+      /><br/>
+    </Box>
+    <TextField
+      label="Comment"
+      value={comment}
+      onChange={(e)=>{setComment(e.target.value)}}
+      fullWidth
+      multiline
+      minRows={3}
+      />  
+     <Button onClick={postComment} color="success" sx={{width:matches?"100%":"20%"}} variant="outlined">
+       Comment
+     </Button>
+     <Divider/>
+      {commentData.comments.length==0 && <span style={{color:"grey",fontSize:"1em"}}>No Comments Yet , Be the First To Comment</span>}
+      {commentData.comments.slice(0).reverse().map((comment) => (
         <Comment {...comment} key={comment._id || ""} />
       ))}
     </Box>

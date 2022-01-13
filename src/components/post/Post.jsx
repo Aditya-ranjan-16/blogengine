@@ -1,17 +1,14 @@
 import {
   Card,
   CardContent,
-  Link,
-  Button,
   Box,
   Divider,
   Typography,
   Chip,
-  Stack
+  CardHeader,
+  Avatar
 } from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import { Link as RouterLink } from "react-router-dom";
-
+import Likes from "./Likes";
 import Viewer from "./Viewer";
 import CommentList from "../commentlist/CommentList";
 
@@ -20,20 +17,31 @@ const Post = ({
   title,
   subtitle,
   author,
-  authorID,
+  authorpic,
+  date,
   content,
   likes,
-  onLike,
   tags,
 }) => {
+
+  const current = new Date(date);
+ const monthname = [{ n: 0, name: "January" }, { n: 1, name: "Feburary" }, { n: 2, name: "March" }, { n: 3, name: "April" }, { n: 4, name: "May" }, { n: 5, name: "June" }, { n: 6, name: "July" }, { n: 7, name: "August" }, { n: 8, name: "September" }, { n: 9, name: "October" }, { n: 10, name: "November" }, { n: 11, name: "December" }].find((v) => {
+    if (current.getMonth() == v.n) {
+      return v
+    }
+
+  })
+
+   const d = `${current.getDate()} ${monthname.name} ${current.getFullYear()}`;
   return (
-    <Card variant="outlined">
+    <Card sx={{  marginTop:7}} variant="outlined">
       <CardContent
         sx={{
           display: "flex",
           flexDirection: "column",
           gap: 2,
           alignItems: "center",
+        
         }}
       >
         <Box
@@ -49,32 +57,29 @@ const Post = ({
           <Typography variant="body" sx={{ fontStyle: "italic" }}>
             {subtitle}
           </Typography>
-          <Button
-            size="large"
-            color="inherit"
-            endIcon={<FavoriteIcon />}
-            onClick={onLike}
-          >
-            {likes}
-          </Button>
+         <Likes postid={postID} count={likes}  />
         </Box>
+        <Divider sx={{ width: "100%" }} />
         <Box sx={{ width: "100%", px: 4 }}>
           <Viewer content={content} />
         </Box>
         <Divider sx={{ width: "100%" }} />
-        <Stack  direction="row" spacing={2}>
+        <Box >
                 {tags.length!=0 && tags.map((e)=>(
-               <Chip sx={{color:"blue",borderColor:"blue"}} label={e} variant="outlined" onClick  />
+               <Chip sx={{color:"blue",borderColor:"blue",margin:0.5}} label={e} variant="outlined"/>
                 ))}
-        </Stack>
-        <Link
-          to={`/author/${authorID}`}
-          component={RouterLink}
-          color="inherit"
-          sx={{ textDecoration: "none", fontStyle: "italic" }}
-        >
-          {`By ${author}`}
-        </Link>
+        </Box>
+        
+          <Card variant="outlined">
+            <CardHeader
+            title={<span style={{fontSize:"0.85em"}}>{`By ${author}`}</span>}
+            subheader={<span style={{fontSize:"0.75em"}}>{`Published - ${d}`}</span>}
+            avatar={<Avatar src={authorpic}></Avatar>}
+            />
+              
+            
+          </Card>
+        
         <Divider sx={{ width: "100%" }} />
         <Typography variant="h6" align="center">
           Comments

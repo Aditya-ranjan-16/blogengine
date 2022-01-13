@@ -13,12 +13,9 @@ const PostViewer = () => {
     try {
       const postRes = await axios.get(`/posts/${postID}`);
       const post = postRes.data.post;
-      console.log(post);
       setPostData({ status: "done", post });
-
       const authorRes = await axios.get(`/authors/${post.author}`);
       const author = authorRes.data;
-      console.log(author);
       setAuthorData({ status: "done", author });
     } catch (error) {
       console.log(error);
@@ -43,7 +40,8 @@ const PostViewer = () => {
       author={authorData.author.name}
       likes={postData.post.likes}
       tags={postData.post.tags}
-      authorID={authorData.author._id}
+      date={postData.post.Date}
+      authorpic={authorData.author.image}
     />
   );
 };
