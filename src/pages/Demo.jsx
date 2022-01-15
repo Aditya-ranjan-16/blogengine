@@ -78,7 +78,7 @@ const Demo=()=>{
             </span>
             <br/>
             <br/>
-      <CreatePost authorID={authorID.id} />
+      <CreatePost key={authorID.id} authorID={authorID.id} />
     </Fragment>
 
     )
