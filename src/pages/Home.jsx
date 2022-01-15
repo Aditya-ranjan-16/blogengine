@@ -10,6 +10,7 @@ import axios from "axios";
 import { useLocation } from 'react-router-dom';
 axios.defaults.baseURL = "https://krs-blogengine-api.herokuapp.com/api";
 const Home = () => {
+  //CI/CD
   const matches = useMediaQuery("(max-width:600px)");
   const location = useLocation()
   const [pData, setPData] = useState({
@@ -35,7 +36,6 @@ const Home = () => {
             tags:post.tags,
             thumb:post.thumb
         })
-       console.log("auth="+post.author);
       } catch (error) {
         console.error(error);
       }
