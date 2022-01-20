@@ -1,8 +1,8 @@
-import { useState, useEffect, useLayoutEffect, useRef,Fragment } from "react";
+import { useState, useEffect,Fragment } from "react";
 import axios from "axios";
 import CircularProgress from '@mui/material/CircularProgress';
 import CreatePost from "../components/editor/CreatePost";
-import { Select, MenuItem, Grid, Container,Box} from "@mui/material";
+import { Select, MenuItem,Box} from "@mui/material";
 import PostGrid from "../components/PostGrid/PostGrid";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
