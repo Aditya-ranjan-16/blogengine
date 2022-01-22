@@ -9,6 +9,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import axios from "axios";
 import { useLocation } from 'react-router-dom';
 axios.defaults.baseURL = "https://krs-blogengine-api.herokuapp.com/api";
+
 const Home = () => {
   //CI/CD
   const matches = useMediaQuery("(max-width:600px)");
@@ -97,13 +98,12 @@ const Home = () => {
         <Grid  lg={6} align="left" sx={{padding:matches?1:10}} item>
           <div  className="shadowlight">
            
-          <PostListItem  {...pData}/>
+          <PostListItem  {...pData}{...{to:"/post/"+pData.id}}/>
           </div>
         </Grid>
       </Grid>
       <hr style={{marginTop:matches?32:0}} className="dthr" />
       <center><span id="demo" style={{color:"white",fontSize:"40px",fontFamily:"sans-serif",fontWeight:"bold"}}>DEMO</span></center> 
-
      <Demo/>
    
      

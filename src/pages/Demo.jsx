@@ -66,9 +66,9 @@ const Demo=()=>{
             A Component To display all the Blog posts In a Grid Fashion based on given author credentials <br/><br/>
             <strong>Click Any Post To Open Viewer</strong>
             </span>
-      <Box p={matches?1:5} >
-      <PostGrid key={authorID.id} authorId={authorID.id} />
-      </Box>
+      
+      <PostGrid to={"/post/"} key={authorID.id} authorId={authorID.id} />
+      
      
       <br />
       <br />

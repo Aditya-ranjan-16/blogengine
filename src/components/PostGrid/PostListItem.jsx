@@ -8,7 +8,9 @@ import {  Divider, Chip } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Likes from "../post/Likes";
-const PostListItem = ({ id, title, likes, subtitle: desc,  author, tags,thumb }) => {
+const PostListItem = ({ id, title, likes, subtitle: desc,  author, tags,thumb,to}) => {
+  
+ 
   const [auth, setAuth] = useState({})
   useEffect(() => {
     async function makeRequest(){
@@ -27,11 +29,12 @@ const PostListItem = ({ id, title, likes, subtitle: desc,  author, tags,thumb })
  
     <Card key={id} sx={{transition:"margin .25s ease-in-out",':hover':{marginTop:-1 }}} elevation={4}>
          <Link
-    to={`/post/${id}`}
+    to={`${to}`}
     component={RouterLink}
     color="inherit"
     sx={{ textDecoration: "none" }}
   >
+   
       <CardHeader
         title={<span style={{ fontFamily: "cubano" ,fontSize:"1em"}}>{title}</span>}
         titleTypographyProps={{align: "left" }}

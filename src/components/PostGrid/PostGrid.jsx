@@ -3,7 +3,7 @@ import axios from "axios";
 import { CircularProgress } from "@mui/material";
 import PostList from "./PostList";
 
-const PostGrid = ({authorId}) => {
+const PostGrid = ({authorId,to}) => {
   const aid = authorId;
   const [authorPosts, setAuthorPosts] = useState({
     status: "loading",
@@ -32,7 +32,8 @@ const PostGrid = ({authorId}) => {
 
   return (
     <div>
-      <PostList posts={authorPosts.posts} />
+      <br/>
+      <PostList to={to} posts={authorPosts.posts} />
     </div>
   );
 };
